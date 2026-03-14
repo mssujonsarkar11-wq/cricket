@@ -9,8 +9,10 @@
 
 <h2>Match Setup</h2>
 
-<input id="team" placeholder="Team Name">
-<input id="overs" placeholder="Total Overs">
+<input id="team" placeholder="Team name">
+<input id="batsman1" placeholder="Batsman 1">
+<input id="batsman2" placeholder="Batsman 2">
+<input id="bowler" placeholder="Bowler">
 
 <button onclick="startMatch()">Start Match</button>
 
@@ -24,6 +26,15 @@
 
 <button onclick="wicket()">WICKET</button>
 <button onclick="noball()">NO BALL</button>
+
+<br><br>
+
+<button onclick="changeBowler()">Change Bowler</button>
+<button onclick="newBatsman()">New Batsman</button>
+
+<br><br>
+
+<button onclick="endInnings()">End Innings</button>
 
 <script type="module" src="scorer.js"></script>
 
