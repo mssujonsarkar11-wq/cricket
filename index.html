@@ -12,14 +12,17 @@
 <div class="scoreboard">
 
 <div class="top">
-<span id="team">TEAM</span>
 <span id="score">0/0</span>
-<span id="overs">(0.0)</span>
+<span id="overs">0.0</span>
 </div>
 
 <div class="players">
-Batsman: <span id="bat1"></span> / <span id="bat2"></span>
+<span id="bat1"></span>
 <br>
+<span id="bat2"></span>
+</div>
+
+<div>
 Bowler: <span id="bowler"></span>
 </div>
 
@@ -27,15 +30,13 @@ Bowler: <span id="bowler"></span>
 
 </div>
 
-<div id="event"></div>
-
 <script type="module" src="viewer.js"></script>
 
 <script>
 navigator.mediaDevices.getUserMedia({video:true})
 .then(stream=>{
-document.getElementById("video").srcObject=stream;
-});
+document.getElementById("video").srcObject=stream
+})
 </script>
 
 </body>
