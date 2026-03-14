@@ -1,39 +1,34 @@
-import {db,ref,onValue} from "./firebase.js"
+import { db, ref, onValue } from "./firebase.js"
 
 const matchRef = ref(db,"match")
 
 onValue(matchRef,(snap)=>{
 
-const data = snap.val()
-if(!data) return
+let d = snap.val()
+if(!d) return
 
-document.getElementById("team").innerText = data.team
-document.getElementById("score").innerText = data.runs+"/"+data.wickets
-document.getElementById("overs").innerText = "("+data.over+"."+data.ball+")"
+document.getElementById("score").innerText =
+d.runs+"/"+d.wickets
 
-document.getElementById("bat1").innerText = data.batsman1
-document.getElementById("bat2").innerText = data.batsman2
-document.getElementById("bowler").innerText = data.bowler
+document.getElementById("overs").innerText =
+d.over+"."+d.ball
 
-if(data.target){
-document.getElementById("target").innerText = "Target: "+data.target
+document.getElementById("bat1").innerText =
+d.striker+" ⭐"
+
+document.getElementById("bat2").innerText =
+d.nonStriker
+
+document.getElementById("bowler").innerText =
+d.bowler
+
+if(d.target){
+document.getElementById("target").innerText =
+"Target: "+d.target
 }
 
-showEvent(data.lastEvent)
+if(d.target && d.runs >= d.target){
+alert("Batting Team WON")
+}
 
 })
-
-function showEvent(e){
-
-if(!e) return
-
-let box = document.getElementById("event")
-
-box.innerText = e
-box.style.display="block"
-
-setTimeout(()=>{
-box.style.display="none"
-},2000)
-
-}
