@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Scorer Panel</title>
+<title>Scorer</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -9,32 +9,48 @@
 
 <h2>Match Setup</h2>
 
-<input id="team" placeholder="Team name">
-<input id="batsman1" placeholder="Batsman 1">
-<input id="batsman2" placeholder="Batsman 2">
+<input id="team" placeholder="Team Name">
+<input id="bat1" placeholder="Batsman 1">
+<input id="bat2" placeholder="Batsman 2">
 <input id="bowler" placeholder="Bowler">
 
 <button onclick="startMatch()">Start Match</button>
 
-<h2>Scoring</h2>
+<hr>
 
-<button onclick="run(1)">1</button>
-<button onclick="run(2)">2</button>
-<button onclick="run(3)">3</button>
-<button onclick="run(4)">FOUR</button>
-<button onclick="run(6)">SIX</button>
+<h2>Ball Entry</h2>
 
-<button onclick="wicket()">WICKET</button>
-<button onclick="noball()">NO BALL</button>
+Ball Type
 
-<br><br>
+<select id="ballType">
+<option value="normal">Normal</option>
+<option value="wide">Wide</option>
+<option value="noball">No Ball</option>
+<option value="bye">Bye</option>
+<option value="legbye">Leg Bye</option>
+</select>
 
-<button onclick="changeBowler()">Change Bowler</button>
-<button onclick="newBatsman()">New Batsman</button>
+Runs
 
-<br><br>
+<select id="runs">
+<option>0</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>6</option>
+</select>
 
-<button onclick="endInnings()">End Innings</button>
+Wicket
+
+<select id="wicket">
+<option value="none">None</option>
+<option value="bowled">Bowled</option>
+<option value="caught">Caught</option>
+<option value="runout">Run Out</option>
+</select>
+
+<button onclick="submitBall()">Submit Ball</button>
 
 <script type="module" src="scorer.js"></script>
 
