@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Score Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Score Panel</h2>
+
+<input id="teamName" placeholder="Team Name" oninput="updateTeamName()">
+
+<br><br>
+
+<button onclick="addRun(1)">+1</button>
+<button onclick="addRun(4)">+4</button>
+<button onclick="addRun(6)">+6</button>
+
+<br><br>
+
+<button onclick="wicket()">Wicket</button>
+<button onclick="over()">Over +</button>
+
+<script type="module">
+  import { db, ref, set } from './firebase.js';
+
+  let runs = 0;
+  let wickets = 0;
+  let overs = 0;
+
+  function updateScore() {
+    set(ref(db, 'match'), { runs, wickets, overs });
+  }
+
+  window.addRun = function(r) {
+    runs += r;
+    updateScore();
+  }
+
+  window.wicket = function() {
+    wickets++;
+    updateScore();
+  }
+
+  window.over = function() {
+    overs += 1;
+    updateScore();
+  }
+
+  window.updateTeamName = function() {
+    const name = document.getElementById("teamName").value || "Team A";
+    set(ref(db, 'match/team'), name);
+  }
+</script>
+
+</body>
+</html>

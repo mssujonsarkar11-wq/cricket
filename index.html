@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Cricket</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Live Cricket</h1>
+
+<video id="video" autoplay playsinline></video>
+
+<div class="scoreboard">
+  <h2 id="team1">Team A</h2>
+  <h3 id="score">0/0</h3>
+  <p id="overs">Overs: 0.0</p>
+</div>
+
+<script type="module">
+  import { db, ref, onValue } from './firebase.js';
+
+  // Live score from Firebase
+  const scoreRef = ref(db, 'match');
+  onValue(scoreRef, (snapshot) => {
+    const data = snapshot.val();
+    if(!data) return;
+
+    document.getElementById('score').innerText = `${data.runs}/${data.wickets}`;
+    document.getElementById('overs').innerText = `Overs: ${data.overs}`;
+  });
+
+  // Camera access
+  const video = document.getElementById("video");
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { video.srcObject = stream; })
+    .catch(error => { console.log("Camera error:", error); });
+</script>
+
+</body>
+</html>
