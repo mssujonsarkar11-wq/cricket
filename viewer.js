@@ -1,21 +1,25 @@
 import {db,ref,onValue} from "./firebase.js"
 
-const scoreRef = ref(db,"match")
+const matchRef = ref(db,"match")
 
-onValue(scoreRef,(snap)=>{
+onValue(matchRef,(snap)=>{
 
-let d=snap.val()
-if(!d) return
+const data = snap.val()
+if(!data) return
 
-document.getElementById("team1").innerText=d.team
-document.getElementById("score").innerText=d.runs+"/"+d.wickets
-document.getElementById("overs").innerText="("+d.over+"."+d.ball+")"
+document.getElementById("team").innerText = data.team
+document.getElementById("score").innerText = data.runs+"/"+data.wickets
+document.getElementById("overs").innerText = "("+data.over+"."+data.ball+")"
 
-if(d.target){
-document.getElementById("target").innerText="Target: "+d.target
+document.getElementById("bat1").innerText = data.batsman1
+document.getElementById("bat2").innerText = data.batsman2
+document.getElementById("bowler").innerText = data.bowler
+
+if(data.target){
+document.getElementById("target").innerText = "Target: "+data.target
 }
 
-showEvent(d.lastEvent)
+showEvent(data.lastEvent)
 
 })
 
@@ -23,10 +27,10 @@ function showEvent(e){
 
 if(!e) return
 
-let box=document.getElementById("eventAnimation")
+let box = document.getElementById("event")
 
+box.innerText = e
 box.style.display="block"
-box.innerText=e
 
 setTimeout(()=>{
 box.style.display="none"
