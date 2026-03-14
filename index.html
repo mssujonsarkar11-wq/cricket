@@ -1,46 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Advanced Live Cricket</title>
-  <link rel="stylesheet" href="style.css">
+<title>Live Cricket</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Advanced Cricket Live Scoreboard</h1>
-
-<video id="video" autoplay playsinline></video>
+<video id="video" autoplay muted></video>
 
 <div class="scoreboard">
-  <h2 id="teamName">Team A</h2>
-  <h3 id="score">0/0</h3>
-  <p id="overs">Overs: 0.0</p>
-  <p id="runRate">Run Rate: 0.00</p>
-  <p id="batsmen">Batsmen: Batsman 1 / Batsman 2</p>
-  <p id="bowler">Bowler: Bowler 1</p>
-  <p id="strike">Strike: Batsman 1</p>
+
+<div class="teams">
+<span id="team1">TEAM</span>
+<span id="score">0/0</span>
+<span id="overs">(0.0)</span>
 </div>
 
-<div class="controls">
-  <input id="teamInput" placeholder="Team Name" oninput="updateTeam()">
-  <input id="bat1" placeholder="Batsman 1" oninput="updateBatsmen()">
-  <input id="bat2" placeholder="Batsman 2" oninput="updateBatsmen()">
-  <input id="bowlerInput" placeholder="Bowler" oninput="updateBowler()">
-  <br><br>
-  <button onclick="addRun(1)">+1</button>
-  <button onclick="addRun(4)">+4</button>
-  <button onclick="addRun(6)">+6</button>
-  <button onclick="wicket()">Wicket</button>
-  <button onclick="ball()">Ball</button>
+<div id="target"></div>
+
 </div>
 
-<script type="module" src="script.js"></script>
+<div id="eventAnimation"></div>
 
-<script type="module">
-  // Camera access
-  const video = document.getElementById("video");
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => { video.srcObject = stream; })
-    .catch(error => { console.log("Camera error:", error); });
+<script type="module" src="viewer.js"></script>
+
+<script>
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{
+document.getElementById("video").srcObject=stream;
+});
 </script>
 
 </body>
