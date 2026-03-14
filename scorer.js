@@ -1,58 +1,70 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Scorer</title>
-<link rel="stylesheet" href="style.css">
-</head>
+import { db, ref, set, update } from "./firebase.js"
 
-<body>
+let state = {
+runs:0,
+wickets:0,
+over:0,
+ball:0,
+striker:"",
+nonStriker:"",
+bowler:"",
+target:null
+}
 
-<h2>Match Setup</h2>
+window.startMatch=function(){
 
-<input id="team" placeholder="Team Name">
-<input id="bat1" placeholder="Batsman 1">
-<input id="bat2" placeholder="Batsman 2">
-<input id="bowler" placeholder="Bowler">
+state.striker=document.getElementById("bat1").value
+state.nonStriker=document.getElementById("bat2").value
+state.bowler=document.getElementById("bowler").value
 
-<button onclick="startMatch()">Start Match</button>
+set(ref(db,"match"),state)
 
-<hr>
+}
 
-<h2>Ball Entry</h2>
+window.submitBall=function(){
 
-Ball Type
+let type=document.getElementById("ballType").value
+let runs=parseInt(document.getElementById("runs").value)
+let wicket=document.getElementById("wicket").value!="none"
 
-<select id="ballType">
-<option value="normal">Normal</option>
-<option value="wide">Wide</option>
-<option value="noball">No Ball</option>
-<option value="bye">Bye</option>
-<option value="legbye">Leg Bye</option>
-</select>
+let addRuns=runs
 
-Runs
+if(type==="wide") addRuns+=1
+if(type==="noball") addRuns+=1
 
-<select id="runs">
-<option>0</option>
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>6</option>
-</select>
+state.runs+=addRuns
 
-Wicket
+if(type!=="wide" && type!=="noball"){
+state.ball++
+}
 
-<select id="wicket">
-<option value="none">None</option>
-<option value="bowled">Bowled</option>
-<option value="caught">Caught</option>
-<option value="runout">Run Out</option>
-</select>
+if(state.ball===6){
 
-<button onclick="submitBall()">Submit Ball</button>
+state.ball=0
+state.over++
 
-<script type="module" src="scorer.js"></script>
+let newBowler=prompt("New Bowler Name")
+state.bowler=newBowler
 
-</body>
-</html>
+}
+
+if(runs%2===1){
+
+let temp=state.striker
+state.striker=state.nonStriker
+state.nonStriker=temp
+
+}
+
+if(wicket){
+
+state.wickets++
+
+let newBat=prompt("New Batsman Name")
+state.striker=newBat
+
+}
+
+update(ref(db,"match"),state)
+
+}
